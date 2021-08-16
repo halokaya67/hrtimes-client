@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -13,6 +13,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Typography from "@material-ui/core/Typography";
 import GoogleButton from "../GoogleButton/GoogleButton";
 import Alert from "@material-ui/lab/Alert";
+import Footer from "../Footer/Footer";
 import "./SignUp.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,12 @@ function SignUp(props) {
     onGoogleSuccess,
     onGoogleFailure,
     error,
+    updateError,
   } = props;
+
+  useEffect(() => {
+    updateError(null);
+  }, []);
 
   return (
     <>
@@ -195,6 +201,7 @@ function SignUp(props) {
             </Grid>
           </form>
         </div>
+        <Footer />
       </Container>
     </>
   );

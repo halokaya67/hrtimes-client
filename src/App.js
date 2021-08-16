@@ -76,7 +76,8 @@ function App(props) {
       updateStatus(false);
       props.history.push("/profile");
     } catch (error) {
-      updateError(error.response.data.errorMessage);
+      console.log(error);
+      updateError(error.response.data.error);
       updateStatus(false);
     }
   };
@@ -122,7 +123,7 @@ function App(props) {
       updateStatus(false);
       props.history.push("/profile");
     } catch (error) {
-      updateError(error.response.data.errorMessage);
+      updateError(error.response.data.error);
       updateStatus(false);
     }
   };
@@ -396,8 +397,7 @@ function App(props) {
       .post(`${API_URL}/api/users/${id}/follow`, {}, { withCredentials: true })
       .then( (response) => {
         
-       updateUser(response.data);
- 
+        updateUser(response.data);
       })
       .catch((error) => {
         console.log("User not followed!", error);
@@ -413,9 +413,8 @@ function App(props) {
         { withCredentials: true }
       )
       .then( (response) => {
-       
-        updateUser(response.data);
 
+        updateUser(response.data);
       })
       .catch((error) => {
         console.log("User not followed!", error);
@@ -453,7 +452,7 @@ function App(props) {
   };
 
   if (fetchingUser) {
-   return <Loading />;;
+    return <Loading />;;
   }
   return (
     <div className="mainPageContainer">
@@ -465,6 +464,7 @@ function App(props) {
             return (
               <SignIn
                 error={myError}
+                updateError={updateError}
                 onSignIn={handleSignIn}
                 onGoogleSuccess={handleGoogleSuccess}
                 onGoogleFailure={handleGoogleFailure}
@@ -507,6 +507,7 @@ function App(props) {
                 onSignUp={handleSignUp}
                 {...routeProps}
                 error={myError}
+                updateError={updateError}
                 onTopicChange={handleTopicChange}
                 interests={interests}
                 onGoogleSuccess={handleGoogleSuccess}
@@ -615,7 +616,6 @@ function App(props) {
         />
         <Route component={NotFound} />
       </Switch>
-      <Footer />
     </div>
   );
 }

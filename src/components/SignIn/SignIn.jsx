@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import GoogleButton from "../GoogleButton/GoogleButton";
 import Alert from "@material-ui/lab/Alert";
 import Typography from "@material-ui/core/Typography";
+import Footer from "../Footer/Footer";
 
 import "./SignIn.css";
 
@@ -30,7 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn(props) {
   const classes = useStyles();
-  const { onSignIn, onGoogleSuccess, onGoogleFailure, error } = props;
+  const { onSignIn, onGoogleSuccess, onGoogleFailure, error, updateError } =
+    props;
+
+  useEffect(() => {
+    updateError(null);
+  }, []);
 
   return (
     <Container component="main" maxWidth="sm" className="signInMainContainer">
@@ -96,6 +102,7 @@ function SignIn(props) {
           </Grid>
         </form>
       </div>
+      <Footer />
     </Container>
   );
 }

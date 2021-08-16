@@ -23,7 +23,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center;
-  height: 94.1vh;
+  height: 110vh;
 }
 
 .signUpFormContainer {
@@ -31,7 +31,7 @@
   border-radius: 50px !important;
   box-shadow: 0 0 10px 5px black !important;
   padding: 40px !important;
-  margin: 30px auto;
+  margin: auto;
 }
 
 .singUpAlert {
@@ -58,14 +58,20 @@
   background-color: #ffffff00 !important;
 }
 
-@media (max-width: 460px) {
+@media (max-width: 475px) {
   .signInFormText {
-    font-size: 12px !important;
+    font-size: 13px !important;
   }
 }
 
 @media (max-width: 400px) {
   .signInFormText {
     font-size: 9px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .signUpMainContainer {
+    height: 128vh;
   }
 }

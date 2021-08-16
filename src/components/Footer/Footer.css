@@ -1,6 +1,10 @@
 .footerNav {
+  position: fixed;
+  bottom: 0;
   background-color: rgba(255, 255, 255, 0) !important;
   color: azure !important;
+  width: 100%;
+  align-items: center;
 }
 
 .footerNav p {

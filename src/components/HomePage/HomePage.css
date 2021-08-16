@@ -1,5 +1,65 @@
-.homePageDiv {
-  height: 94.1vh;
+@media (max-width: 620px) {
+  .homePageDiv {
+    height: 138vh;
+  }
+  .signUpText {
+    font-size: 18px !important;
+  }
+  .homePageIntroBox {
+    border-radius: 50px 50px 0 0;
+  }
+
+  .homePageImg img {
+    border-radius: 0 0 50px 50px;
+  }
+
+  .homePageLogo {
+    width: 300px;
+  }
+}
+
+@media (min-width: 600px) {
+  .homePageDiv {
+    height: 130vh;
+  }
+  .homePageIntroBox {
+    border-radius: 50px 50px 0 0;
+  }
+
+  .homePageImg img {
+    border-radius: 0 0 50px 50px;
+  }
+}
+
+@media (min-width: 960px) {
+  .homePageDiv {
+    height: 130vh;
+  }
+
+  .homePageIntroBox {
+    border-radius: 50px 50px 0 0;
+  }
+
+  .homePageImg img {
+    border-radius: 0 0 50px 50px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .homePageDiv {
+    height: 100vh;
+  }
+  .homePageIntroBox {
+    border-radius: 50px 0 0 50px;
+  }
+
+  .homePageImg img {
+    border-radius: 0 50px 50px 0;
+  }
+
+  .homePageLogo {
+    width: 500px;
+  }
 }
 
 .wrapperImage {
@@ -84,55 +144,4 @@
 .signUpLink:hover {
   color: #64dfdf;
   transition: color 250ms;
-}
-
-@media (max-width: 620px) {
-  .signUpText {
-    font-size: 18px !important;
-  }
-  .homePageIntroBox {
-    border-radius: 50px 50px 0 0;
-  }
-
-  .homePageImg img {
-    border-radius: 0 0 50px 50px;
-  }
-
-  .homePageLogo {
-    width: 300px;
-  }
-}
-
-@media (min-width: 600px) {
-  .homePageIntroBox {
-    border-radius: 50px 50px 0 0;
-  }
-
-  .homePageImg img {
-    border-radius: 0 0 50px 50px;
-  }
-}
-
-@media (min-width: 960px) {
-  .homePageIntroBox {
-    border-radius: 50px 50px 0 0;
-  }
-
-  .homePageImg img {
-    border-radius: 0 0 50px 50px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .homePageIntroBox {
-    border-radius: 50px 0 0 50px;
-  }
-
-  .homePageImg img {
-    border-radius: 0 50px 50px 0;
-  }
-
-  .homePageLogo {
-    width: 500px;
-  }
 }

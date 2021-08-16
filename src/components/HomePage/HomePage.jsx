@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import Footer from "../Footer/Footer";
 
 import "./HomePage.css";
 
@@ -38,6 +39,7 @@ function HomePage() {
           <img src="/media/landing.jpg" alt="newspaper"></img>
         </Grid>
       </Grid>
+      <Footer />
     </div>
   );
 }
