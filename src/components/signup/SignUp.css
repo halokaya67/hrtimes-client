@@ -23,7 +23,8 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center;
-  height: 110vh;
+  min-height: 900px;
+  height: 100vh;
 }
 
 .signUpFormContainer {
@@ -61,6 +62,9 @@
 @media (max-width: 475px) {
   .signInFormText {
     font-size: 13px !important;
+  }
+  .signUpMainContainer {
+    min-height: 1050px;
   }
 }
 

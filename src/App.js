@@ -25,7 +25,6 @@ function App(props) {
   const [interests, updateInterests] = useState([]);
   const [articles, updateArticles] = useState([]);
   const [comments, updateComments] = useState([]);
-  const [filteredData, updateFilteredData] = useState([]);
   const [showLoading, updateShowLoading] = useState(true);
 
   const handleTopicChange = (newInterests) => {
@@ -237,7 +236,6 @@ function App(props) {
     let formData = new FormData();
     formData.append("imageUrl", event.target.myImage.files[0]);
     let imgResponse = await axios.post(`${API_URL}/api/upload`, formData);
-    console.log(imgResponse);
 
     let newArticle = {
       section: section.value,
@@ -375,22 +373,6 @@ function App(props) {
       });
   };
 
-  const handleSearch = (event) => {
-    let searchedData = event.target.value;
-    console.log(searchedData);
-    let flatted = data.flat(Infinity);
-
-    let filteredData = flatted.filter((element) => {
-      console.log(data);
-      let result = element.title
-        .toLowerCase()
-        .includes(searchedData.toLowerCase());
-      console.log(result);
-      return result;
-    });
-    updateFilteredData(filteredData);
-  };
-
   const handleFollowUser = (event, id) => {
     event.preventDefault();
     axios
@@ -438,7 +420,6 @@ function App(props) {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response.data.data);
         updateUser(response.data.data);
         updateError(null);
         updateStatus(false);
@@ -481,7 +462,6 @@ function App(props) {
                 <Navbar
                   onLogOut={handleLogOut}
                   user={user}
-                  onSearch={handleSearch}
                 />
                 <Profile
                   data={data}

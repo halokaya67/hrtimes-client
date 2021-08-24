@@ -155,8 +155,8 @@ function Profile(props) {
           );
         })}
       </Grid>
-      <ScrollToTop showUnder={160}>
-        <ArrowUpwardIcon style={{ fontSize: 40, color: "white" }} />
+      <ScrollToTop showUnder={100}>
+        <ArrowUpwardIcon className="arrowUp" />
       </ScrollToTop>
     </div>
   );

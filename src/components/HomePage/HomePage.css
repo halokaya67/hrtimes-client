@@ -62,6 +62,10 @@
   }
 }
 
+.homePageDiv {
+  min-height: 820px;
+}
+
 .wrapperImage {
   background: black;
   display: flex;

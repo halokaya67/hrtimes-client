@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -12,6 +13,7 @@ import { topStoriesTopics } from "../../data/data";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Typography from "@material-ui/core/Typography";
 import GoogleButton from "../GoogleButton/GoogleButton";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import Alert from "@material-ui/lab/Alert";
 import Footer from "../Footer/Footer";
 import "./SignUp.css";
@@ -48,8 +50,20 @@ function SignUp(props) {
     updateError,
   } = props;
 
+  let countryList = [];
+
   useEffect(() => {
-    updateError(null);
+    (async () => {
+      try {
+        let response = await axios.get("https://restcountries.eu/rest/v2/all");
+        response.data.map((country) => {
+          countryList.push({ value: country.alpha3Code, label: country.name });
+        });
+        updateError(null);
+      } catch (error) {
+        updateError(error);
+      }
+    })();
   }, []);
 
   return (
@@ -62,7 +76,7 @@ function SignUp(props) {
           </Typography>
           <form className={classes.form} noValidate onSubmit={onSignUp}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="uname"
                   name="username"
@@ -72,6 +86,17 @@ function SignUp(props) {
                   id="userName"
                   label="Username"
                   autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -97,27 +122,32 @@ function SignUp(props) {
                   autoComplete="lname"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="country"
-                  name="country"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="country"
-                  label="country"
-                  autoFocus
+                <Autocomplete
+                  autoHighlight
+                  options={countryList}
+                  getOptionLabel={(option) => option.label}
+                  renderOption={(option) => (
+                    <React.Fragment>
+                      {option.value} - {option.label}
+                    </React.Fragment>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      label="Choose Your Country"
+                      variant="outlined"
+                      autoComplete="country"
+                      name="country"
+                      fullWidth
+                      id="country"
+                      autoFocus
+                      inputProps={{
+                        ...params.inputProps,
+                      }}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -145,18 +175,39 @@ function SignUp(props) {
                 />
               </Grid>
               <Grid item xs={12}>
+                <Autocomplete
+                  multiple
+                  limitTags={3}
+                  options={topStoriesTopics}
+                  getOptionLabel={(option) => option.label}
+                  defaultValue={[]}
+                  onChange={onTopicChange}
+                  closeMenuOnSelect={false}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  multiValue={interests}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="topics"
+                      variant="outlined"
+                      label="Choose Your Interests"
+                      placeholder="Interests"
+                    />
+                  )}
+                />
                 <Select
-                  style={{ width: "100%" }}
                   onChange={onTopicChange}
                   closeMenuOnSelect={false}
                   defaultValue={[]}
-                  label="selet interests"
+                  placeholder="Choose Your Interests"
                   isMulti
                   name="topics"
                   options={topStoriesTopics}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   multiValue={interests}
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>
