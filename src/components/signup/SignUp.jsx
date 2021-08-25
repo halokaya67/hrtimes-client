@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Select from "react-select";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,6 +16,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Alert from "@material-ui/lab/Alert";
 import Footer from "../Footer/Footer";
 import "./SignUp.css";
+import geoJson from "../../data/countriesCities.json";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,31 +39,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp(props) {
+  const [countryList, updateCountryList] = useState([]);
+  const [countryValue, updateCountryValue] = useState(null);
   const classes = useStyles();
   const {
     onSignUp,
-    interests,
-    onTopicChange,
+    updateInterests,
     onGoogleSuccess,
     onGoogleFailure,
     error,
     updateError,
   } = props;
 
-  let countryList = [];
-
   useEffect(() => {
-    (async () => {
-      try {
-        let response = await axios.get("https://restcountries.eu/rest/v2/all");
-        response.data.map((country) => {
-          countryList.push({ value: country.alpha3Code, label: country.name });
-        });
-        updateError(null);
-      } catch (error) {
-        updateError(error);
-      }
-    })();
+    updateCountryList(Object.keys(geoJson));
+    updateError(null);
   }, []);
 
   return (
@@ -74,7 +64,13 @@ function SignUp(props) {
           <Typography className="signUpHeader" variant="h3" gutterBottom>
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={onSignUp}>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={(event) => {
+              onSignUp(event);
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -126,11 +122,12 @@ function SignUp(props) {
                 <Autocomplete
                   autoHighlight
                   options={countryList}
-                  getOptionLabel={(option) => option.label}
+                  onChange={(event, value) => {
+                    updateCountryValue(value);
+                  }}
+                  getOptionLabel={(option) => option}
                   renderOption={(option) => (
-                    <React.Fragment>
-                      {option.value} - {option.label}
-                    </React.Fragment>
+                    <React.Fragment>{option}</React.Fragment>
                   )}
                   renderInput={(params) => (
                     <TextField
@@ -150,18 +147,36 @@ function SignUp(props) {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="city"
-                  name="city"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="city"
-                  label="city"
-                  autoFocus
-                />
-              </Grid>
+              {!countryValue ? (
+                ""
+              ) : (
+                <Grid item xs={12} sm={6}>
+                  <Autocomplete
+                    autoHighlight
+                    options={geoJson[`${countryValue}`]}
+                    getOptionLabel={(option) => option}
+                    renderOption={(option) => (
+                      <React.Fragment>{option}</React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required
+                        label="Choose Your City"
+                        variant="outlined"
+                        autoComplete="city"
+                        name="city"
+                        fullWidth
+                        id="city"
+                        autoFocus
+                        inputProps={{
+                          ...params.inputProps,
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+              )}
               <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
@@ -180,32 +195,19 @@ function SignUp(props) {
                   limitTags={3}
                   options={topStoriesTopics}
                   getOptionLabel={(option) => option.label}
-                  defaultValue={[]}
-                  onChange={onTopicChange}
+                  onChange={(event, value) => {
+                    updateInterests(value);
+                  }}
                   closeMenuOnSelect={false}
                   filterSelectedOptions
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      name="topics"
                       variant="outlined"
                       label="Choose Your Interests"
                       placeholder="Interests"
                     />
                   )}
-                />
-                <Select
-                  onChange={onTopicChange}
-                  closeMenuOnSelect={false}
-                  defaultValue={[]}
-                  placeholder="Choose Your Interests"
-                  isMulti
-                  name="topics"
-                  options={topStoriesTopics}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  multiValue={interests}
-                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>

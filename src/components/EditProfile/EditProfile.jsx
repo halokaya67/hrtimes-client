@@ -48,7 +48,7 @@ export default function EditProfile(props) {
     updateUser,
     onEditProfile,
     user,
-    onTopicChange,
+    updateInterests,
     onDeleteComment,
     onDeleteArticle,
     onDeleteProfile,
@@ -344,7 +344,9 @@ export default function EditProfile(props) {
                   <Grid item xs={12}>
                     <Select
                       style={{ width: "100%" }}
-                      onChange={onTopicChange}
+                      onChange={(event, value) => {
+                        updateInterests(value);
+                      }}
                       closeMenuOnSelect={false}
                       defaultValue={[]}
                       label="selet interests"

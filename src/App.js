@@ -26,18 +26,6 @@ function App(props) {
   const [comments, updateComments] = useState([]);
   const [showLoading, updateShowLoading] = useState(true);
 
-  const handleTopicChange = (newInterests) => {
-    updateInterests(newInterests);
-  };
-
-  const handleDataChange = (param) => {
-    updateData(param);
-  };
-
-  const handleUserChange = (param) => {
-    updateUser(param);
-  };
-
   useEffect(() => {
     (async () => {
       try {
@@ -79,14 +67,17 @@ function App(props) {
       updateStatus(false);
     }
   };
+
+  const handleDataChange = (param) => {
+    updateData(param);
+  };
+
+  const handleUserChange = (param) => {
+    updateUser(param);
+  };
   
   const handleSignUp = async (event) => {
     event.preventDefault();
-    let formData = new FormData();
-    formData.append("imageUrl", event.target.myImage.files[0]);
-    
-    let imgResponse = await axios.post(`${API_URL}/api/upload`, formData);
-    
     const {
       username,
       firstName,
@@ -95,25 +86,28 @@ function App(props) {
       passwordHash,
       country,
       city,
-      topics,
-      myImage,
+      myImage
     } = event.target;
 
-    let values = interests.map((i) => i.value);
+    let newUser = {};
+    let values = interests.map((interest) => interest.value);
 
-    let newUser = {
-      username: username.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      country: country.value,
-      city: city.value,
-      passwordHash: passwordHash.value,
-      interests: values,
-      image: imgResponse.data.image,
-    };
+    let formData = new FormData();
+    formData.append("imageUrl", myImage.files[0]); 
     
     try {
+      let imgResponse = await axios.post(`${API_URL}/api/upload`, formData);
+      newUser = {
+        username: username.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        country: country.value,
+        city: city.value,
+        passwordHash: passwordHash.value,
+        interests: values,
+        image: imgResponse.data.image,
+      };
       let response = await axios.post(`${API_URL}/api/signup`, newUser, {
         withCredentials: true,
       });
@@ -487,7 +481,7 @@ function App(props) {
                 {...routeProps}
                 error={myError}
                 updateError={updateError}
-                onTopicChange={handleTopicChange}
+                updateInterests={updateInterests}
                 interests={interests}
                 onGoogleSuccess={handleGoogleSuccess}
                 onGoogleFailure={handleGoogleFailure}
@@ -506,7 +500,7 @@ function App(props) {
                   onEditProfile={handleEditProfile}
                   onDeleteProfile={handleDeleteProfile}
                   {...routeProps}
-                  onTopicChange={handleTopicChange}
+                  updateInterests={updateInterests}
                   onUserChange={handleUserChange}
                   user={user}
                   updateUser={updateUser}
