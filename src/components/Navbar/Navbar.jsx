@@ -34,7 +34,7 @@ function Navbar(props) {
           </Link>
           <Link to={`/${user._id}/edit`}>
             <Button className="navBarButtons">
-              <i class="fas fa-user-edit fa-lg"></i>
+              <i className="fas fa-user-edit fa-lg"></i>
               <span className="navBarButtonLabels">Edit Profile</span>
             </Button>
           </Link>

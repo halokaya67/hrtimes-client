@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { API_URL } from "../../config";
 import axios from "axios";
-import SortButton from "../SortButton/SortButton";
-import "./Profile.css";
 import UserArticleCard from "../UserArticleCard/UserArticleCard";
 import DataCard from "../DataCard/DataCard";
+import Loading from "../Loading/Loading";
+import SortButton from "../SortButton/SortButton";
 import Grid from "@material-ui/core/Grid";
-import Loading from "../Loading/index";
-import ScrollToTop from "react-scroll-up";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import "./Profile.css";
+import GoTopButton from "../GoTopButton/GoTopButton";
 
 function Profile(props) {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [showGoTop, setShowGoTop] = useState("goTopHidden");
+
+  const refScrollUp = useRef();
   const {
     data,
     user,
@@ -39,9 +42,7 @@ function Profile(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
 
-  useEffect(() => {
     (async () => {
       try {
         let commentResponse = await axios.get(`${API_URL}/api/comments`, {
@@ -63,6 +64,10 @@ function Profile(props) {
     })();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleVisibleButton);
+  });
+
   let flatted = data.flat(Infinity);
 
   const sortBy = (event) => {
@@ -81,12 +86,28 @@ function Profile(props) {
     onDataChange(sorted);
   };
 
+  const handleVisibleButton = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+
+    return scrollPosition > 50
+      ? setShowGoTop("goTop")
+      : scrollPosition < 50
+      ? setShowGoTop("goTopHidden")
+      : null;
+  };
+
+  const handleScrollUp = () => {
+    refScrollUp.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   if (!data.length || !user) {
     return <Loading />;
   }
 
   return (
     <div className="profile">
+      <div ref={refScrollUp}></div>
       <div className="welcome">
         <h1>Hi {user.username.toUpperCase()}!</h1>
       </div>
@@ -127,7 +148,6 @@ function Profile(props) {
       <hr style={{ width: "100%" }}></hr>
 
       <Grid container className="dataArticlesTwo">
-        <br></br>
         <Grid container justifyContent="flex-end">
           <Grid item>
             <SortButton justifyContent="flex-end" sortBy={sortBy} />
@@ -155,9 +175,7 @@ function Profile(props) {
           );
         })}
       </Grid>
-      <ScrollToTop showUnder={100}>
-        <ArrowUpwardIcon className="arrowUp" />
-      </ScrollToTop>
+      <GoTopButton showGoTop={showGoTop} scrollUp={handleScrollUp} />
     </div>
   );
 }

@@ -1,0 +1,24 @@
+.goTopHidden {
+  display: none;
+}
+
+.goTop {
+  display: block !important;
+}
+
+.goTop:hover {
+  transform: scale(1.1);
+}
+
+.goTopText {
+  position: fixed;
+  background: rgba(252, 248, 241, 0.1);
+  box-shadow: 2px 2px 5px wheat;
+  width: 30px;
+  height: 30px;
+  border-radius: 25px;
+  bottom: 5%;
+  right: 5%;
+  text-align: center;
+  line-height: 30px;
+}

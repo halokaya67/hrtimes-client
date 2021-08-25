@@ -7,15 +7,14 @@ import { API_URL } from "./config";
 import SignUp from "./components/signup/SignUp";
 import Profile from "./components/Profile/Profile";
 import EditProfile from "./components/EditProfile/EditProfile";
-import Footer from "./components/Footer/Footer";
 import CreateArticle from "./components/CreateArticle/CreateArticle";
 import EditArticle from "./components/EditArticle/EditArticle";
 import ArticleDetails from "./components/ArticleDetails/ArticleDetails";
 import Navbar from "./components/Navbar/Navbar";
 import UserDetails from "./components/UserDetails/UserDetails";
-import "./App.css";
-import Loading from "./components/Loading/index";
+import Loading from "./components/Loading/Loading";
 import NotFound from "./components/NotFound/NotFound";
+import "./App.css";
 
 function App(props) {
   const [user, updateUser] = useState(null);

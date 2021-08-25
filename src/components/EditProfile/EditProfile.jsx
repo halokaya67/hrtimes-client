@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Select from "react-select";
+import axios from "axios";
+import { API_URL } from "../../config";
 import { Button } from "@material-ui/core";
 import { topStoriesTopics } from "../../data/data";
+import Loading from "../Loading/Loading";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -10,18 +14,12 @@ import { Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import axios from "axios";
-import { API_URL } from "../../config";
-import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import SettingsIcon from "@material-ui/icons/Settings";
 import Paper from "@material-ui/core/Paper";
-import "./EditProfile.css";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import Loading from "../Loading/index";
+import "./EditProfile.css";
 
 export default function EditProfile(props) {
   const useStyles = makeStyles((theme) => ({

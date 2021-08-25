@@ -3,10 +3,10 @@ import { API_URL } from "../../config";
 import axios from "axios";
 import CreateComment from "../CreateComment/CreateComment";
 import ArticleCard from "../ArticleCard/ArticleCard";
-import Grid from "@material-ui/core/Grid";
+import Loading from "../Loading/Loading";
 import CommentBox from "../CommentBox/CommentBox";
+import Grid from "@material-ui/core/Grid";
 import "./ArticleDetails.css";
-import Loading from "../Loading/index";
 
 export default function ArticleDetails(props) {
   const [articleDetail, updateArticleDetail] = useState(null);

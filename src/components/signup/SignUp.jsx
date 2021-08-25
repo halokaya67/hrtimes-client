@@ -183,9 +183,7 @@ function SignUp(props) {
                   defaultValue={[]}
                   onChange={onTopicChange}
                   closeMenuOnSelect={false}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  multiValue={interests}
+                  filterSelectedOptions
                   renderInput={(params) => (
                     <TextField
                       {...params}
